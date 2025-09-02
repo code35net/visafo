@@ -1,0 +1,182 @@
+<abp-modal [busy]="service.isBusy" [(visible)]="service.isVisible">
+  <ng-template #abpHeader>
+    <!--<suite-custom-code-block-0>-->
+    <!--</suite-custom-code-block-0>-->
+    <h3>
+      <!--<suite-custom-code-block-1>-->
+      <!--</suite-custom-code-block-1>-->
+      {{ (service.selected ? 'AbpUi::Edit' : '::NewCustomer') | abpLocalization }}
+      <!--<suite-custom-code-block-2>-->
+      <!--</suite-custom-code-block-2>-->
+    </h3>
+    <!--<suite-custom-code-block-3>-->
+    <!--</suite-custom-code-block-3>-->
+  </ng-template>
+
+  <ng-template #abpBody>
+    <!--<suite-custom-code-block-4>-->
+    <!--</suite-custom-code-block-4>-->
+    <form
+      [formGroup]="service.form"
+      id="customer"
+      (ngSubmit)="service.submitForm()"
+      validateOnSubmit
+    >
+      <!--<suite-custom-code-block-5>-->
+      <!--</suite-custom-code-block-5>-->
+
+      <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <li ngbNavItem>
+          <a ngbNavLink>
+            {{ '::Customer' | abpLocalization }}
+          </a>
+          <ng-template ngbNavContent>
+            <div class="mt-2 fade-in-top">
+              <div class="mb-3">
+                <label class="form-label" for="customer-name">
+                  {{ '::Name' | abpLocalization }} *
+                </label>
+
+                <input id="customer-name" formControlName="name" class="form-control" autofocus />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="customer-sur-name">
+                  {{ '::SurName' | abpLocalization }} *
+                </label>
+
+                <input id="customer-sur-name" formControlName="surName" class="form-control" />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="customer-maiden-name">
+                  {{ '::MaidenName' | abpLocalization }}
+                </label>
+
+                <input
+                  id="customer-maiden-name"
+                  formControlName="maidenName"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="customer-birth-place">
+                  {{ '::BirthPlace' | abpLocalization }} *
+                </label>
+
+                <input
+                  id="customer-birth-place"
+                  formControlName="birthPlace"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="customer-birth-day">
+                  {{ '::BirthDay' | abpLocalization }} *
+                </label>
+
+                <div class="input-group" validationTarget>
+                  <input
+                    readonly
+                    id="customer-birth-day"
+                    formControlName="birthDay"
+                    class="form-control"
+                    ngbDatepicker
+                    #birthDayInput
+                    #birthDayDatepicker="ngbDatepicker"
+                    (click)="birthDayDatepicker.open()"
+                    (keyup.space)="birthDayDatepicker.open()"
+                  />
+                  @if (birthDayInput.value) {
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-link px-2"
+                        type="button"
+                        [title]="'AbpUi::Clear' | abpLocalization"
+                        (click)="
+                          birthDayDatepicker.writeValue(null);
+                          birthDayDatepicker.manualDateChange(null, true)
+                        "
+                      >
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="customer-identity-no">
+                  {{ '::IdentityNo' | abpLocalization }} *
+                </label>
+
+                <input
+                  id="customer-identity-no"
+                  formControlName="identityNo"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="customer-nationality">
+                  {{ '::Nationality' | abpLocalization }} *
+                </label>
+
+                <input
+                  id="customer-nationality"
+                  formControlName="nationality"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="customer-sex">
+                  {{ '::Sex' | abpLocalization }} *
+                </label>
+
+                <select
+                  id="customer-sex"
+                  formControlName="sex"
+                  class="form-select form-control"
+                  [readonly]="service.selected"
+                >
+                  <option [ngValue]="null"></option>
+                  <option
+                    *ngFor="
+                      let option of service.customerSexOptions;
+                      trackBy: service.track.by('key')
+                    "
+                    [ngValue]="option.value"
+                  >
+                    {{ '::Enum:CustomerSex.' + option.value | abpLocalization }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
+
+      <!--<suite-custom-code-block-6>-->
+      <!--</suite-custom-code-block-6>-->
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <!--<suite-custom-code-block-7>-->
+    <!--</suite-custom-code-block-7>-->
+    <button type="button" class="btn btn-secondary" abpClose>
+      {{ 'AbpUi::Cancel' | abpLocalization }}
+    </button>
+    <!--<suite-custom-code-block-8>-->
+    <!--</suite-custom-code-block-8>-->
+    <abp-button iconClass="fa fa-check" buttonType="submit" formName="customer">
+      {{ 'AbpUi::Save' | abpLocalization }}
+    </abp-button>
+    <!--<suite-custom-code-block-9>-->
+    <!--</suite-custom-code-block-9>-->
+  </ng-template>
+</abp-modal>

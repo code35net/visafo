@@ -1,0 +1,177 @@
+<abp-modal [busy]="service.isBusy" [(visible)]="service.isVisible">
+  <ng-template #abpHeader>
+    <!--<suite-custom-code-block-0>-->
+    <!--</suite-custom-code-block-0>-->
+    <h3>
+      <!--<suite-custom-code-block-1>-->
+      <!--</suite-custom-code-block-1>-->
+      {{ (service.selected ? 'AbpUi::Edit' : '::NewApplication') | abpLocalization }}
+      <!--<suite-custom-code-block-2>-->
+      <!--</suite-custom-code-block-2>-->
+    </h3>
+    <!--<suite-custom-code-block-3>-->
+    <!--</suite-custom-code-block-3>-->
+  </ng-template>
+
+  <ng-template #abpBody>
+    <!--<suite-custom-code-block-4>-->
+    <!--</suite-custom-code-block-4>-->
+    <form
+      [formGroup]="service.form"
+      id="application"
+      (ngSubmit)="service.submitForm()"
+      validateOnSubmit
+    >
+      <!--<suite-custom-code-block-5>-->
+      <!--</suite-custom-code-block-5>-->
+
+      <ul ngbNav #nav="ngbNav" class="nav-tabs">
+        <li ngbNavItem>
+          <a ngbNavLink>
+            {{ '::Application' | abpLocalization }}
+          </a>
+          <ng-template ngbNavContent>
+            <div class="mt-2 fade-in-top">
+              <div class="mb-3">
+                <label class="form-label" for="application-ref-code">
+                  {{ '::RefCode' | abpLocalization }}
+                </label>
+
+                <input
+                  id="application-ref-code"
+                  formControlName="refCode"
+                  class="form-control"
+                  autofocus
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="application-tracking-code">
+                  {{ '::TrackingCode' | abpLocalization }}
+                </label>
+
+                <input
+                  id="application-tracking-code"
+                  formControlName="trackingCode"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="application-notes">
+                  {{ '::Notes' | abpLocalization }}
+                </label>
+
+                <textarea id="application-notes" formControlName="notes" class="form-control">
+                </textarea>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="application-reservation-date">
+                  {{ '::ReservationDate' | abpLocalization }}
+                </label>
+
+                <div class="input-group" validationTarget>
+                  <input
+                    readonly
+                    id="application-reservation-date"
+                    formControlName="reservationDate"
+                    class="form-control"
+                    ngbDatepicker
+                    #reservationDateInput
+                    #reservationDateDatepicker="ngbDatepicker"
+                    (click)="reservationDateDatepicker.open()"
+                    (keyup.space)="reservationDateDatepicker.open()"
+                  />
+                  @if (reservationDateInput.value) {
+                    <div class="input-group-append">
+                      <button
+                        class="btn btn-link px-2"
+                        type="button"
+                        [title]="'AbpUi::Clear' | abpLocalization"
+                        (click)="
+                          reservationDateDatepicker.writeValue(null);
+                          reservationDateDatepicker.manualDateChange(null, true)
+                        "
+                      >
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                      </button>
+                    </div>
+                  }
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="application-reservation-time">
+                  {{ '::ReservationTime' | abpLocalization }}
+                </label>
+
+                <ngb-timepicker
+                  id="application-reservation-time"
+                  formControlName="reservationTime"
+                  [spinners]="false"
+                  [meridian]="true"
+                />
+              </div>
+
+              <div class="form-check mb-3">
+                <input
+                  type="checkbox"
+                  id="application-is-documented"
+                  formControlName="isDocumented"
+                  class="form-check-input"
+                />
+
+                <label for="application-is-documented" class="form-check-label">
+                  {{ '::IsDocumented' | abpLocalization }}
+                </label>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label" for="application-application-status">
+                  {{ '::ApplicationStatus' | abpLocalization }} *
+                </label>
+
+                <select
+                  id="application-application-status"
+                  formControlName="applicationStatus"
+                  class="form-select form-control"
+                >
+                  <option [ngValue]="null"></option>
+                  <option
+                    *ngFor="
+                      let option of service.applicationStatusOptions;
+                      trackBy: service.track.by('key')
+                    "
+                    [ngValue]="option.value"
+                  >
+                    {{ '::Enum:ApplicationStatus.' + option.value | abpLocalization }}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </ng-template>
+        </li>
+      </ul>
+      <div [ngbNavOutlet]="nav"></div>
+
+      <!--<suite-custom-code-block-6>-->
+      <!--</suite-custom-code-block-6>-->
+    </form>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <!--<suite-custom-code-block-7>-->
+    <!--</suite-custom-code-block-7>-->
+    <button type="button" class="btn btn-secondary" abpClose>
+      {{ 'AbpUi::Cancel' | abpLocalization }}
+    </button>
+    <!--<suite-custom-code-block-8>-->
+    <!--</suite-custom-code-block-8>-->
+    <abp-button iconClass="fa fa-check" buttonType="submit" formName="application">
+      {{ 'AbpUi::Save' | abpLocalization }}
+    </abp-button>
+    <!--<suite-custom-code-block-9>-->
+    <!--</suite-custom-code-block-9>-->
+  </ng-template>
+</abp-modal>

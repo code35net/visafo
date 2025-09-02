@@ -1,0 +1,10 @@
+{
+  "remoteServiceBaseUrl": "https://localhost:44334",
+  "oAuthConfig": {
+    "issuer": "https://localhost:44332/",
+    "clientId": "VisaFlowApp_App",
+    "scope": "offline_access VisaFlowApp",
+    "responseType": "code",
+    "requireHttps": true
+  }
+}
